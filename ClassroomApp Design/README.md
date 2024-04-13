@@ -1,5 +1,12 @@
 The first project of J2YB-Mentorship program: Design an E-learning web app. Here are my change log for my report:
 
+## 2024-04-13
+
+* Design database for usescases:
+    * Cart
+    * Livestream chat
+    * Send message.
+
 ## 2024-04-12
 
 * Design database for new usescases:

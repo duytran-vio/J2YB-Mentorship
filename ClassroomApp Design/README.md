@@ -1,5 +1,14 @@
 The first project of J2YB-Mentorship program: Design an E-learning web app. Here are my change log for my report:
 
+## 2024-04-15
+
+* Add new usecase for student: Manage orders.
+* Create new UI for usecase Manage orders.
+* Design database for:
+    * Orders
+    * Teacher's review.
+    * Teacher's certificates.
+
 ## 2024-04-13
 
 * Design database for usescases:

@@ -1,5 +1,15 @@
 The first project of J2YB-Mentorship program: Design an E-learning web app. Here are my change log for my report:
 
+## 2024-04-18
+
+* Fix database:
+    * Notification
+    * course: level, language
+    * course_student: status
+    * session_status
+    * session_reply_discuss
+* Write query for course detail screen.
+
 ## 2024-04-15
 
 * Add new usecase for student: Manage orders.

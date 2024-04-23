@@ -1,5 +1,12 @@
 The first project of J2YB-Mentorship program: Design an E-learning web app. Here are my change log for my report:
 
+## 2024-04-23
+
+* Fix database:
+    * Create Role entity
+    * Fix session_status, session_discuss.
+* Fix query report.
+
 ## 2024-04-18
 
 * Fix database:

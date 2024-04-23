@@ -131,7 +131,9 @@ CREATE TABLE [session_status] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [session_id] integer,
   [student_id] integer,
-  [status_id] integer
+  [status_id] integer,
+  [create_at] datetime,
+  [update_at] datetime
 )
 GO
 

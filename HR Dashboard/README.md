@@ -1,5 +1,24 @@
 # Daily Work Report
 
+## Date: 13/05/2024
+
+### Summary
+
+Re-design HR Dashboard database.
+
+### Tasks Completed
+
+- Finish brainstorm and re-design fact_headcount.
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Re-design fact_recruitment, fact_leave and research terms related to recruitment and leave.
+
+
 ## Date: 12/05/2024
 
 ### Summary

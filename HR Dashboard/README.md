@@ -1,5 +1,27 @@
 # Daily Work Report
 
+## Date: 14/05/2024
+
+### Summary
+
+Review data warehouse: definition, data pipeline, dimension modeling, ETL vs ELT.
+
+### Tasks Completed
+
+- Review data warehouse: 
+    - WHAT and WHY data warehouse.
+    - Data pipeline.
+    - Dimension modeling.
+    - ETL vs ELT.
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Re-design fact_recruitment, fact_leave and research terms related to recruitment and leave.
+
 ## Date: 13/05/2024
 
 ### Summary

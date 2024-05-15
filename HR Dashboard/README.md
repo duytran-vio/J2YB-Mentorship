@@ -1,5 +1,26 @@
 # Daily Work Report
 
+## Date: 15/05/2024
+
+### Summary
+
+Brainstorm recruitment and research relevant terms regarding to recruitment.
+
+### Tasks Completed
+
+- Brainstorm recruitment and research relevant terms regarding to recruitment:
+    - Vacancy
+    - % Vacancy Filled vs % Screening Hired.
+- Scanning recruitment dashboard.
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Finalize fact_recruitment database design.
+
 ## Date: 14/05/2024
 
 ### Summary

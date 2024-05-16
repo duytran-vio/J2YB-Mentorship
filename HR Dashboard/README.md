@@ -8,7 +8,7 @@ Research about different user personas in people analytics.
 
 ### Tasks Completed
 
-- Research about different user personas in people analytics
+- Research about different user personas in people analytics (their role in organization and what their needs in dashboard):
     - Directors
     - HR Managers
     - Department Managers

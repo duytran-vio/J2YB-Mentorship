@@ -1,5 +1,31 @@
 # Daily Work Report
 
+## Date: 16/05/2024
+
+### Summary
+
+Research about different user personas in people analytics.
+
+### Tasks Completed
+
+- Research about different user personas in people analytics
+    - Directors
+    - HR Managers
+    - Department Managers
+    - Recruitment Manager
+    - Learning and Development Manager
+    - Compensation and Benefits Manager
+    - Employee
+
+### Challenges Faced
+
+- Some roles have the same views, but different level of detail. Try to identify level of detail for each role.
+
+### Next Steps
+
+- Reconstruct user personas mindmap, create layer 3.
+
+
 ## Date: 15/05/2024
 
 ### Summary

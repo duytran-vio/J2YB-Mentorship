@@ -1,5 +1,26 @@
 # Daily Work Report
 
+## Date: 17/05/2024
+
+### Summary
+
+Research about Director role in people analytics.
+
+### Tasks Completed
+
+- Research about Director role in people analytics focus on 3 needs:
+    - Overall Headcount.
+    - Attrition (turnover).
+    - Workforce costs.
+
+### Challenges Faced
+
+- Research process is slow, take a lot of time.
+
+### Next Steps
+
+- Research about HR Manager role in people analytics.
+
 ## Date: 16/05/2024
 
 ### Summary

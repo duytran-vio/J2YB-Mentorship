@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 20/05/2024
+
+### Summary
+
+Research about Department head, Team leader role in people analytics.
+
+### Tasks Completed
+
+- Research about Department head, Team leader role in people analytics (Layer 2).
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Extend Layer 3 of Department head and Team leader.
+
 ## Date: 17/05/2024
 
 ### Summary
@@ -15,7 +33,7 @@ Research about Director role in people analytics.
 
 ### Challenges Faced
 
-- Research process is slow, take a lot of time.
+- Research process is slow, takes a lot of time.
 
 ### Next Steps
 

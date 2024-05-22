@@ -1,5 +1,24 @@
 # Daily Work Report
 
+## Date: 22/05/2024
+
+### Summary
+
+Research about Team leader, employee responsibility in organization and identify metrics in people analytics.
+
+### Tasks Completed
+
+- Research about Team leader, employee responsibility in organization.
+- Identify metrics of Team leader, employee in people analytics (Layer 2, 3).
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Extend Layer 3 of Department head, provide final version of people analytics user personas.
+
 ## Date: 21/05/2024
 
 ### Summary
@@ -9,7 +28,7 @@ Research about HR Manager responsibility in organization and identify metrics in
 ### Tasks Completed
 
 - Research about HR Manager responsibility in organization.
-- Identify metrics in people analytics (Layer 2, 3).
+- Identify metrics of HR Manager in people analytics (Layer 2, 3).
 
 ### Challenges Faced
 

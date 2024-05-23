@@ -1,5 +1,25 @@
 # Daily Work Report
 
+## Date: 23/05/2024
+
+### Summary
+
+Research about Department Head responsibility in organization and identify metrics in people analytics.
+
+### Tasks Completed
+
+- Research about Department Head responsibility in organization.
+- Identify metrics of Department Head in people analytics (Layer 2, 3).
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Review and modify people analytics user personas once again.
+- Create database mindmap for People Analytics dashboards.
+
 ## Date: 22/05/2024
 
 ### Summary

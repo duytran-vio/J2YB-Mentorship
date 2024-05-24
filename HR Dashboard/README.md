@@ -1,5 +1,24 @@
 # Daily Work Report
 
+## Date: 24/05/2024
+
+### Summary
+
+- Review people analytics user personas mindmap and update Director pesona.
+
+### Tasks Completed
+
+- Review people analytics user personas mindmap
+- Update Director pesona. (add Workforce performance view)
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Create database mindmap for People Analytics dashboards.
+
 ## Date: 23/05/2024
 
 ### Summary

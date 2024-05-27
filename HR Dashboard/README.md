@@ -1,5 +1,25 @@
 # Daily Work Report
 
+## Date: 27/05/2024
+
+### Summary
+
+- HR Dashboard Top-down scaning.
+
+### Tasks Completed
+
+- HR Dashboard Top-down scaning:
+    - Leave
+    - Employee Rating
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Create database mindmap for People Analytics dashboards.
+
 ## Date: 26/05/2024
 
 ### Summary

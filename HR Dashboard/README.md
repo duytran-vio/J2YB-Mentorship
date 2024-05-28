@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 28/05/2024
+
+### Summary
+
+- Create database mindmap for People Analytics dashboards.
+
+### Tasks Completed
+
+- Create database mindmap for People Analytics dashboards.
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Review database design of People Analytics dashboards once again.
+- Study PowerBI.
+
 ## Date: 27/05/2024
 
 ### Summary

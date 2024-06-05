@@ -1,5 +1,22 @@
 # Daily Work Report
 
+## Date: 05/06/2024
+
+### Summary
+
+- Explore PowerBi 
+
+### Tasks Completed
+
+- Explore PowerBi with provided data: Observe model view, create a simple slicer and chart.
+### Challenges Faced
+
+None
+
+### Next Steps
+
+ - Learn DAX to create needed measure and create summary page
+
 ## Date: 28/05/2024
 
 ### Summary

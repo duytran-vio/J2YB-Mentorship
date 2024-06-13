@@ -1,5 +1,24 @@
 # Daily Work Report
 
+## Date: 13/06/2024
+
+### Summary
+
+- Learn PowerBI, read about 3-30-300 rule for better reports
+
+### Tasks Completed
+
+- Learn PowerBI: Drill down, Drill through.
+- Read about 3-30-300 rule for better reports.
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+ - Review and apply 3-30-300 rule to construct employee dashboard for Director role.
+
 ## Date: 05/06/2024
 
 ### Summary

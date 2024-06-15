@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 15/06/2024
+
+### Summary
+
+- Applying 3-30-30 rule to contruct employees dashboard for Executive Level.
+
+### Tasks Completed
+
+- Applying 3-30-30 rule to contruct employees dashboard for Executive Level.
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+ - Do 8-weeks SQL Excercise. DP-080 T-SQL excercise
+
 ## Date: 13/06/2024
 
 ### Summary

@@ -88,5 +88,72 @@ SELECT sales.customer_id,
 FROM sales_after_join sales
 WHERE rank = 1;
 
+SELECT sales.customer_id,
+		sales.product_name
+FROM sales_after_join sales
+WHERE rank = 1;
+
+WITH sales_before_join AS (
+  SELECT sales.customer_id,
+          menu.product_name,
+          sales.order_date,
+          ROW_NUMBER() OVER (
+            PARTITION BY sales.customer_id
+            ORDER BY sales.order_date DESC
+          ) as rank
+  FROM dannys_diner.sales sales
+  JOIN dannys_diner.members members on sales.customer_id = members.customer_id
+  JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+  								AND sales.order_date < members.join_date
+)
+
+SELECT sales.customer_id,
+		sales.product_name
+FROM sales_before_join sales
+WHERE rank = 1;
+
+  SELECT sales.customer_id,
+          COUNT(sales.product_id) as total_items,
+          SUM(menu.price) as total_spent
+  FROM dannys_diner.sales sales
+  JOIN dannys_diner.members members on sales.customer_id = members.customer_id
+  JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+  								AND sales.order_date < members.join_date
+  GROUP BY sales.customer_id
+  ORDER BY sales.customer_id;
+
+WITH points_cte AS (
+  SELECT 
+    menu.product_id, 
+    CASE
+      WHEN product_id = 1 THEN price * 20
+      ELSE price * 10 END AS points
+  FROM dannys_diner.menu
+)
+
+SELECT 
+  sales.customer_id, 
+  SUM(points_cte.points) AS total_points
+FROM dannys_diner.sales
+JOIN points_cte ON sales.product_id = points_cte.product_id
+GROUP BY sales.customer_id
+ORDER BY sales.customer_id;
+
+
+SELECT sales.customer_id,
+		SUM(
+          CASE
+            WHEN menu.product_id = 1 THEN menu.price * 20
+
+            WHEN sales.order_date BETWEEN members.join_date AND (members.join_date + 6) THEN menu.price * 20
+            ELSE menu.price * 10
+          END
+		) as total_point
+FROM dannys_diner.sales sales
+JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+JOIN dannys_diner.members members ON sales.customer_id = members.customer_id AND members.join_date <= sales.order_date
+WHERE EXTRACT(MONTH FROM order_date) = 1
+GROUP BY sales.customer_id;
+
 
 

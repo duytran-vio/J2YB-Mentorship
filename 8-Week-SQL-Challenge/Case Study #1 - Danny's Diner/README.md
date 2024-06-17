@@ -186,4 +186,102 @@
 
 ---
 
-[View on DB Fiddle](https://www.db-fiddle.com/f/2rM8RAnq7h5LLDTzZiRWcd/7286)
+
+
+---
+**Query #7: Which item was purchased just before the customer became a member?**
+
+    WITH sales_before_join AS (
+      SELECT sales.customer_id,
+              menu.product_name,
+              sales.order_date,
+              ROW_NUMBER() OVER (
+                PARTITION BY sales.customer_id
+                ORDER BY sales.order_date DESC
+              ) as rank
+      FROM dannys_diner.sales sales
+      JOIN dannys_diner.members members on sales.customer_id = members.customer_id
+      JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+      								AND sales.order_date < members.join_date
+    )
+    
+    SELECT sales.customer_id,
+    		sales.product_name
+    FROM sales_before_join sales
+    WHERE rank = 1;
+
+| customer_id | product_name |
+| ----------- | ------------ |
+| A           | sushi        |
+| B           | sushi        |
+
+---
+**Query #8: What is the total items and amount spent for each member before they became a member?**
+
+    SELECT sales.customer_id,
+              COUNT(sales.product_id) as total_items,
+              SUM(menu.price) as total_spent
+      FROM dannys_diner.sales sales
+      JOIN dannys_diner.members members on sales.customer_id = members.customer_id
+      JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+      								AND sales.order_date < members.join_date
+      GROUP BY sales.customer_id
+      ORDER BY sales.customer_id;
+
+| customer_id | total_items | total_spent |
+| ----------- | ----------- | ----------- |
+| A           | 2           | 25          |
+| B           | 3           | 40          |
+
+---
+**Query #9: If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
+
+    WITH points_cte AS (
+      SELECT 
+        menu.product_id, 
+        CASE
+          WHEN product_id = 1 THEN price * 20
+          ELSE price * 10 END AS points
+      FROM dannys_diner.menu
+    )
+    
+    SELECT 
+      sales.customer_id, 
+      SUM(points_cte.points) AS total_points
+    FROM dannys_diner.sales
+    JOIN points_cte ON sales.product_id = points_cte.product_id
+    GROUP BY sales.customer_id
+    ORDER BY sales.customer_id;
+
+| customer_id | total_points |
+| ----------- | ------------ |
+| A           | 860          |
+| B           | 940          |
+| C           | 360          |
+
+---
+**Query #10: In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?**
+
+    SELECT sales.customer_id,
+    		SUM(
+              CASE
+                WHEN menu.product_id = 1 THEN menu.price * 20
+    
+                WHEN sales.order_date BETWEEN members.join_date AND (members.join_date + 6) THEN menu.price * 20
+                ELSE menu.price * 10
+              END
+    		) as total_point
+    FROM dannys_diner.sales sales
+    JOIN dannys_diner.menu menu ON sales.product_id = menu.product_id
+    JOIN dannys_diner.members members ON sales.customer_id = members.customer_id AND members.join_date <= sales.order_date
+    WHERE EXTRACT(MONTH FROM order_date) = 1
+    GROUP BY sales.customer_id;
+
+| customer_id | total_point |
+| ----------- | ----------- |
+| B           | 320         |
+| A           | 1020        |
+
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/2rM8RAnq7h5LLDTzZiRWcd/7298)

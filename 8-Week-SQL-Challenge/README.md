@@ -4,6 +4,24 @@
 
 ### Summary
 
+- Did Case Study #2 - Pizza Runner A (1-7)
+
+### Tasks Completed
+
+- Did Case Study #2 - Pizza Runner A (1-7)
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+ - Finish Case Study #2 - - Pizza Runner
+
+## Date: 17/06/2024
+
+### Summary
+
 - Finish Case Study #1 - Danny's Diner 
 
 ### Tasks Completed

@@ -1,5 +1,25 @@
 # Daily Work Report
 
+## Date: 25/06/2024
+
+### Summary
+
+- Finish Case Study #2 - Pizza Runner part A
+- Did Case Study #2 - Pizza Runner part B
+
+### Tasks Completed
+
+- Finish Case Study #2 - Pizza Runner part A
+- Did Case Study #2 - Pizza Runner part B
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Finish Case Study #2 - Pizza Runner part B
+
 ## Date: 17/06/2024
 
 ### Summary
@@ -16,7 +36,7 @@ None
 
 ### Next Steps
 
- - Finish Case Study #2 - - Pizza Runner
+ - Finish Case Study #2 - Pizza Runner
 
 ## Date: 17/06/2024
 

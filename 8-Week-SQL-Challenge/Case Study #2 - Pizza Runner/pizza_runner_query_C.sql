@@ -137,7 +137,7 @@ SELECT
     ||
     COALESCE(' - Exclude ' || ex.exclusions, '')
     ||
-    COALESCE(' - Extra ' || ex.extras, '') AS order_item
+    COALESCE(' - Extra ' || ex2.extras, '') AS order_item
 FROM customer_orders_clean co
 JOIN pizza_runner.pizza_names pn ON co.pizza_id = pn.pizza_id
 LEFT JOIN LATERAL (
@@ -151,8 +151,8 @@ LEFT JOIN LATERAL (
         STRING_AGG(pt2.topping_name, ', ') AS extras
     FROM unnest(string_to_array(co.extras, ',')) AS el(topping_id)
     LEFT JOIN pizza_runner.pizza_toppings pt2 ON el.topping_id::NUMERIC = pt2.topping_id
-) ex ON true
-GROUP BY co.order_id, pn.pizza_name, ex.exclusions, ex.extras
+) ex2 ON true
+GROUP BY co.order_id, pn.pizza_name, ex.exclusions, ex2.extras
 ORDER BY co.order_id;
 
 

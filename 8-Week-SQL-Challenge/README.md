@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 12/07/2024
+
+### Summary
+
+- Completed SQL Challenge Session 1
+
+### Tasks Completed
+
+- Completed SQL Challenge Session 1
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Do SQL Challenge Session 2, 3
+
 ## Date: 10/07/2024
 
 ### Summary

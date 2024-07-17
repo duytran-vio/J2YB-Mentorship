@@ -1,5 +1,24 @@
 # Daily Work Report
 
+## Date: 17/07/2024
+
+### Summary
+
+- Completed SQL Challenge Session 3, Case Study #2 - Pizza Runner part C (5-6)
+
+### Tasks Completed
+
+- Completed SQL Challenge Session 2
+- Completed Case Study #2 - Pizza Runner part C (5-6)
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Do Case Study #2 - Pizza Runner part D-E
+
 ## Date: 16/07/2024
 
 ### Summary

@@ -108,28 +108,28 @@ ORDER BY count(ex.topping_id) DESC;
 --Meat Lovers - Extra Bacon
 --Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
 
-SELECT 
-	co.order_id,
-	pn.pizza_name
-	|| 
-		CASE
-			WHEN co.exclusions = '' THEN ''
-			ELSE ' - Exclude ' || string_agg(pt.topping_name,', ')
-		END 
-	||
-		CASE
-			WHEN co.extras = '' THEN ''
-			ELSE ' - Extra ' || string_agg(pt2.topping_name,', ')
-		END
-	AS order_item
-FROM customer_orders_clean co
-LEFT JOIN LATERAL unnest(string_to_array(co.exclusions,',')) AS ex(topping_id) ON TRUE 
-LEFT JOIN pizza_runner.pizza_toppings pt ON ex.topping_id::NUMERIC = pt.topping_id
-LEFT JOIN LATERAL unnest(string_to_array(co.extras,',')) AS el(topping_id) ON TRUE 
-LEFT JOIN pizza_runner.pizza_toppings pt2 ON el.topping_id::NUMERIC = pt2.topping_id
-JOIN pizza_runner.pizza_names pn ON co.pizza_id = pn.pizza_id
-GROUP BY co.order_id, pn.pizza_name, co.exclusions, co.extras
-ORDER BY order_id;
+--SELECT 
+--	co.order_id,
+--	pn.pizza_name
+--	|| 
+--		CASE
+--			WHEN co.exclusions = '' THEN ''
+--			ELSE ' - Exclude ' || string_agg(pt.topping_name,', ')
+--		END 
+--	||
+--		CASE
+--			WHEN co.extras = '' THEN ''
+--			ELSE ' - Extra ' || string_agg(pt2.topping_name,', ')
+--		END
+--	AS order_item
+--FROM customer_orders_clean co
+--LEFT JOIN LATERAL unnest(string_to_array(co.exclusions,',')) AS ex(topping_id) ON TRUE 
+--LEFT JOIN pizza_runner.pizza_toppings pt ON ex.topping_id::NUMERIC = pt.topping_id
+--LEFT JOIN LATERAL unnest(string_to_array(co.extras,',')) AS el(topping_id) ON TRUE 
+--LEFT JOIN pizza_runner.pizza_toppings pt2 ON el.topping_id::NUMERIC = pt2.topping_id
+--JOIN pizza_runner.pizza_names pn ON co.pizza_id = pn.pizza_id
+--GROUP BY co.order_id, pn.pizza_name, co.exclusions, co.extras
+--ORDER BY order_id;
 
 SELECT 
     co.order_id,
@@ -155,14 +155,66 @@ LEFT JOIN LATERAL (
 GROUP BY co.order_id, pn.pizza_name, ex.exclusions, ex2.extras
 ORDER BY co.order_id;
 
+--5.Generate an alphabetically ordered comma separated ingredient list for each
+-- pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
+--For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
 
+SELECT 
+	co.order_id,
+	co.customer_id,
+	pn.pizza_name || ': ' || recipe.topping_str AS pizza_str
+FROM customer_orders_clean co
+LEFT JOIN pizza_runner.pizza_recipes pr ON co.pizza_id=pr.pizza_id
+LEFT JOIN LATERAL(
+	SELECT 
+		string_agg(
+			CASE 
+				WHEN cnt_topping > 1 THEN recipe.cnt_topping || 'x' 
+				ELSE ''
+			END
+			|| recipe.topping_name, ', '
+			) AS topping_str
+	FROM (
+		SELECT pt.topping_name,
+				count(trim(toppings.topping_id)) AS cnt_topping
+		FROM unnest(string_to_array(pr.toppings, ',') 
+					|| 
+					string_to_array(co.extras, ',')
+					) AS toppings(topping_id)
+		JOIN pizza_toppings pt ON pt.topping_id=toppings.topping_id::NUMERIC
+		WHERE trim(toppings.topping_id) NOT IN (SELECT trim(ex.topping_id)
+												FROM UNNEST(string_to_array(co.exclusions,',')) AS ex(topping_id)
+												WHERE ex.topping_id IS NOT NULL)
+		GROUP BY pt.topping_name
+		ORDER BY pt.topping_name
+	) AS recipe
+) recipe ON TRUE 
+JOIN pizza_runner.pizza_names pn ON pn.pizza_id = co.pizza_id
+ORDER BY co.order_id;
 
+--6.What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
 
-
-
-
-
-
+SELECT 
+	pt.topping_name,
+	sum(recipe.cnt_topping) AS quantity
+FROM customer_orders_clean co
+LEFT JOIN pizza_runner.pizza_recipes pr ON co.pizza_id=pr.pizza_id
+LEFT JOIN LATERAL(
+	SELECT toppings.topping_id::NUMERIC,
+			count(trim(toppings.topping_id)) AS cnt_topping
+	FROM unnest(string_to_array(pr.toppings, ',') 
+				|| 
+				string_to_array(co.extras, ',')
+				) AS toppings(topping_id)
+	WHERE toppings.topping_id::NUMERIC NOT IN (SELECT ex.topping_id::NUMERIC
+											FROM UNNEST(string_to_array(co.exclusions,',')) AS ex(topping_id)
+											WHERE ex.topping_id IS NOT NULL)
+	GROUP BY toppings.topping_id::NUMERIC
+	ORDER BY toppings.topping_id::NUMERIC
+) recipe ON TRUE 
+JOIN pizza_runner.pizza_toppings pt ON recipe.topping_id=pt.topping_id
+GROUP BY pt.topping_name
+ORDER BY quantity DESC;
 
 
 

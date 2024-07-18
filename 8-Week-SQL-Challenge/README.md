@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 18/07/2024
+
+### Summary
+
+- Completed Case Study #2 - Pizza Runner 
+
+### Tasks Completed
+
+- Completed Case Study #2 - Pizza Runner 
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Do Case Study #3 - Foodie-fi
+
 ## Date: 17/07/2024
 
 ### Summary

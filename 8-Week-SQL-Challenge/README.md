@@ -1,5 +1,23 @@
 # Daily Work Report
 
+## Date: 26/07/2024
+
+### Summary
+
+- Completed Case Study #3 -Foodie-fi part B
+
+### Tasks Completed
+
+- Completed Case Study #3 - Foodie-fi part B
+
+### Challenges Faced
+
+None
+
+### Next Steps
+
+- Do Flowgorithm's Exercise 23/07/2024
+
 ## Date: 18/07/2024
 
 ### Summary

@@ -135,6 +135,30 @@ WHERE apc.plan_id = 3;
 
 --10.Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
 
+WITH annual_plan_cte AS (
+	SELECT
+		s.*,
+		s.start_date - FIRST_VALUE(s.start_date) OVER (
+			PARTITION BY s.customer_id
+			ORDER BY s.start_date
+		) AS day_to_annual_plan
+	FROM foodie_fi.subscriptions s
+	WHERE s.plan_id IN (0, 3)
+	ORDER BY s.customer_id, s.start_date
+), bins AS (
+	SELECT
+		apc.day_to_annual_plan,
+		WIDTH_BUCKET(apc.day_to_annual_plan, 0, 365, 12) AS bucket
+	FROM annual_plan_cte apc
+	WHERE apc.plan_id = 3
+)
+
+SELECT
+	(b.bucket - 1) * 30 || ' - ' || b.bucket * 30 || ' days' AS periods,
+	count(*)
+FROM bins b
+GROUP BY b.bucket
+ORDER BY b.bucket;
 
 --11.How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
 
@@ -151,6 +175,6 @@ WITH next_plan_cte AS (
 )
 
 SELECT
-	count(npc.customer_id)
+	count(npc.customer_id) AS downgrade_to_basic
 FROM next_plan_cte npc
 WHERE npc.plan_id=2 AND npc.next_plan=1;

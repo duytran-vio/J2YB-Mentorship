@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="HP"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-08-01 06:55:52 AM"/>
+        <attribute name="created" value="SFA7REVTS1RPUC02TlE1UTZFOzIwMjQtMDgtMDE7MDY6MTM6MzAgQU07MjQ2NA=="/>
+        <attribute name="edited" value="SFA7REVTS1RPUC02TlE1UTZFOzIwMjQtMDgtMDE7MDY6NTU6NTIgQU07MjsyNTgz"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="n, i" type="Integer" array="False" size=""/>
+            <output expression="&quot;Enter length of array: &quot;" newline="True"/>
+            <input variable="n"/>
+            <declare name="a" type="Integer" array="True" size="n"/>
+            <for variable="i" start="0 " end="n - 1" direction="inc" step="1">
+                <assign variable="a[i]" expression="Random(10)"/>
+                <output expression="a[i]" newline="True"/>
+            </for>
+            <call expression="findMostFrequent(a, n)"/>
+        </body>
+    </function>
+    <function name="findFirstIndex" type="Integer" variable="firstIndex">
+        <parameters>
+            <parameter name="a" type="Integer" array="True"/>
+            <parameter name="n" type="Integer" array="False"/>
+            <parameter name="value" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="firstIndex" type="Integer" array="False" size=""/>
+            <assign variable="firstIndex" expression="0"/>
+            <while expression="firstIndex &lt; n &amp;&amp; a[firstIndex] != value">
+                <assign variable="firstIndex" expression="firstIndex + 1"/>
+            </while>
+        </body>
+    </function>
+    <function name="findMostFrequent" type="None" variable="">
+        <parameters>
+            <parameter name="a" type="Integer" array="True"/>
+            <parameter name="n" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="frequent" type="Integer" array="True" size="n"/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="0" end="n - 1" direction="inc" step="1">
+                <assign variable="frequent[i]" expression="0"/>
+            </for>
+            <for variable="i" start="0" end="n - 1" direction="inc" step="1">
+                <declare name="firstIndex" type="Integer" array="False" size=""/>
+                <assign variable="firstIndex" expression="findFirstIndex(a, n, a[i])"/>
+                <assign variable="frequent[firstIndex]" expression="frequent[firstIndex] + 1"/>
+            </for>
+            <declare name="maxFrequent, mostFrequentValue" type="Integer" array="False" size=""/>
+            <assign variable="maxFrequent" expression="0"/>
+            <for variable="i" start="0" end="n - 1" direction="inc" step="1">
+                <if expression="maxFrequent &lt; frequent[i]">
+                    <then>
+                        <assign variable="maxFrequent" expression="frequent[i]"/>
+                        <assign variable="mostFrequentValue" expression="a[i]"/>
+                    </then>
+                    <else/>
+                </if>
+            </for>
+            <output expression="&quot;The most frequent element is: &quot; &amp; mostFrequentValue &amp; &quot; with &quot; &amp; maxFrequent &amp; &quot; occurrences.&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

@@ -23,4 +23,12 @@ public class CardTest {
         String cardValue = card.show();
         assertEquals(expectedCardValue, cardValue);
     }
+
+    @Test
+    void testEquals_WhenTwoCardsHaveSameRankAndSuit_ThenReturnTrue() {
+        Card card1 = Card.create(RankType.TWO, SuitType.HEARTS);
+        Card card2 = Card.create(RankType.TWO, SuitType.HEARTS);
+
+        assertEquals(true, card1.equals(card2));
+    }
 }

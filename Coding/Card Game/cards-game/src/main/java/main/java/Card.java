@@ -23,4 +23,8 @@ public class Card {
     public String show() {
         return rank.getRank() + suit.getSymbol();
     }
+
+    public boolean equals(Card card) {
+        return this.rank == card.getRank() && this.suit == card.getSuit();
+    }
 }

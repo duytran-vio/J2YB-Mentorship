@@ -1,6 +1,8 @@
 package main.java;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,15 +76,13 @@ public class DeckTest {
     @Test 
     void testDrawCardAt_WhenIndexIsOutOfBound_ThenThrowException() {
         Deck deck = new Deck();
-        try {
-            deck.drawCardAt(52);
-        } catch (IllegalStateException e) {
-            assertEquals("No card at index 52", e.getMessage());
-        }
+
+        Exception exception  = assertThrows(IllegalArgumentException.class, () -> deck.drawCardAt(52));
+        assertEquals("No card at index 52", exception.getMessage());
     }
 
     @Test
-    void testGetCards_WhenIndexesAreValid_ThenReturnCardsAtSpecifiedIndexes() {
+    void testDrawCards_WhenIndexesAreValid_ThenReturnCardsAtSpecifiedIndexes() {
         Deck deck = new Deck();
         Card cardAt5 = deck.getCards().get(5);
         Card cardAt10 = deck.getCards().get(10);
@@ -92,11 +92,35 @@ public class DeckTest {
         indexes.add(5);
         indexes.add(10);
         indexes.add(15);
-        List<Card> returnedCards = deck.getCards(indexes);
+        List<Card> returnedCards = deck.drawCards(indexes);
 
-        assertEquals(cardAt5.show(), returnedCards.get(0).show());
-        assertEquals(cardAt10.show(), returnedCards.get(1).show());
-        assertEquals(cardAt15.show(), returnedCards.get(2).show());
+        assertTrue(cardAt5.equals(returnedCards.get(0)));
+        assertTrue(cardAt10.equals(returnedCards.get(1)));
+        assertTrue(cardAt15.equals(returnedCards.get(2)));
         assertEquals(49, deck.getSize());
+    }
+
+    @Test
+    void testDrawCards_WhenIndexesAreOutOfBound_ThenThrowException() {
+        Deck deck = new Deck();
+        List<Integer> indexes = new ArrayList<>();
+        indexes.add(5);
+        indexes.add(10);
+        indexes.add(52);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> deck.drawCards(indexes));
+        assertEquals("No card at index 52", exception.getMessage());
+    }
+
+    @Test
+    void testDrawCards_WhenDuplicateIndexes_ThenThrowDuplicateIndexesException() {
+        Deck deck = new Deck();
+        List<Integer> indexes = new ArrayList<>();
+        indexes.add(5);
+        indexes.add(5);
+        indexes.add(15);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> deck.drawCards(indexes));
+        assertEquals("Duplicate index: " + 5, exception.getMessage());
     }
 }

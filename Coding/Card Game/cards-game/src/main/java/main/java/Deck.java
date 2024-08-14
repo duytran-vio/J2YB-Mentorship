@@ -1,7 +1,9 @@
 package main.java;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import main.java.utils.SuitType;
 @Getter
 @Setter
 public class Deck {
-    private List<Card> cards;
+    protected List<Card> cards;
 
     public Deck(){
         this.cards = new ArrayList<Card>();
@@ -49,20 +51,29 @@ public class Deck {
 
     public Card drawCardAt(int index) {
         if (cards.size() <= index) {
-            throw new IllegalStateException("No card at index " + index);
+            throw new IllegalArgumentException("No card at index " + index);
         }
         return cards.remove(index);
     }
 
-    public List<Card> getCards(List<Integer> indexes) {
+    public List<Card> drawCards(List<Integer> indexes) {
         List<Card> resultCards = new ArrayList<>();
+        Set<Integer> picked = new LinkedHashSet<>();
+        for(int i = 0; i < indexes.size(); i++) {
+            int index = indexes.get(i);
+            if (cards.size() <= index) {
+                throw new IllegalArgumentException("No card at index " + index + ". Deck size: " + cards.size());
+            }
+            if (picked.contains(index)) {
+                throw new IllegalArgumentException("Duplicate index: " + index);
+            }
+            resultCards.add(cards.get(index));
+            picked.add(index);
+        }
         indexes.sort((first, second) -> second - first);
         for (int i = indexes.size() - 1; i >= 0; i--) {
             int index = indexes.get(i);
-            if (cards.size() <= index) {
-                throw new IllegalStateException("No card at index " + index);
-            }
-            resultCards.add(cards.remove(index));
+            cards.remove(index);
         }
         return resultCards;
     }

@@ -1,13 +1,18 @@
 package main.java;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
+
+import main.java.utils.RankType;
+import main.java.utils.SuitType;
 
 public class DeckTest {
     @Test
@@ -123,4 +128,34 @@ public class DeckTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> deck.drawCards(indexes));
         assertEquals("Duplicate index: " + 5, exception.getMessage());
     }
+
+    @Test
+    void testDiscardCardsWithCond_WhenFilterMatchesSomeCards_ThenRemoveMatchingCards() {
+        Deck deck = new Deck();
+        Predicate<Card> filter = card -> card.getRank() == RankType.ACE;
+        int initialSize = deck.getSize();
+
+        List<Card> excludeCards = List.of(
+            new Card(RankType.ACE, SuitType.CLUBS),
+            new Card(RankType.ACE, SuitType.DIAMONDS),
+            new Card(RankType.ACE, SuitType.HEARTS),
+            new Card(RankType.ACE, SuitType.SPADES)
+        );
+
+        deck.discardCardsWithCond(filter);
+
+        assertEquals(initialSize - 4, deck.getSize());
+        assertThat(deck.getCards()).doesNotContainAnyElementsOf(excludeCards);
+    }
+
+    @Test
+    void testDiscardCardsWithCond_WhenFilterMatchesAllCards_ThenRemoveAllCards() {
+        Deck deck = new Deck();
+        Predicate<Card> filter = card -> true;
+
+        deck.discardCardsWithCond(filter);
+
+        assertEquals(0, deck.getSize());
+    }
 }
+

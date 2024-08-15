@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -76,5 +77,10 @@ public class Deck {
             cards.remove(index);
         }
         return resultCards;
+    }
+
+    public Deck discardCardsWithCond(Predicate<Card> filter) {
+        cards.removeIf(filter);
+        return this;
     }
 }

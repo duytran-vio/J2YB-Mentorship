@@ -6,10 +6,8 @@ import java.util.List;
 import j2yb.dam.StorageItem.StorageItem;
 import j2yb.dam.User.User;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class ContainerItem extends StorageItem {
     private List<StorageItem> items;
 
@@ -20,5 +18,9 @@ public class ContainerItem extends StorageItem {
     
     public void addItem(StorageItem item) {
         items.add(item);
+    }
+
+    public void deleteItemWithName(String name) {
+        items.removeIf(item -> item.getName().equals(name));
     }
 }

@@ -11,4 +11,18 @@ public class FileTest {
         assertThat(file.getName()).isEqualTo("file.txt");
         assertThat(file.getContent()).isEqualTo("content");
     }
+
+    @Test
+    public void testRename() {
+        File file = new File("file.txt", "content", null);
+        file.rename("newFile.txt");
+        assertThat(file.getName()).isEqualTo("newFile.txt");
+    }
+
+    @Test
+    public void testChangeContent() {
+        File file = new File("file.txt", "content", null);
+        file.changeContent("newContent");
+        assertThat(file.getContent()).isEqualTo("newContent");
+    }
 }

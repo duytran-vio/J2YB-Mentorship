@@ -2,10 +2,8 @@ package j2yb.dam.StorageItem;
 
 import j2yb.dam.User.User;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public abstract class StorageItem {
     private static int idCounter = 0;
     private Integer id;
@@ -17,5 +15,12 @@ public abstract class StorageItem {
         this.id = idCounter++;
         this.name = name;
         this.owner = owner;
+    }
+
+    public void rename(String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        this.name = newName;
     }
 }

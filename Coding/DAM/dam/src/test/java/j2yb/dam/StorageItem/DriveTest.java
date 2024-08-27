@@ -41,6 +41,17 @@ public class DriveTest {
     }
 
     @Test
+    public void testAddItem_WhenExistFolderName_ThenThrowIllegalArgumentException() {
+        Drive drive = new Drive("C:", null);
+        Folder rootFolder = new Folder("item", null);
+        drive.addItem(rootFolder);
+        Folder rootFolder2 = new Folder("item", null);
+        assertThatThrownBy(() -> drive.addItem(rootFolder2))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Item with the same name already exists");
+    }
+
+    @Test
     public void testGetItems() {
         Drive drive = new Drive("C:", null);
         Folder rootFolder = new Folder("item", null);

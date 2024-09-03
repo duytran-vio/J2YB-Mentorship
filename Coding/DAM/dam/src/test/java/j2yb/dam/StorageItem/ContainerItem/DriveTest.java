@@ -1,11 +1,10 @@
-package j2yb.dam.StorageItem;
+package j2yb.dam.StorageItem.ContainerItem;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import j2yb.dam.StorageItem.ContainerItem.Drive;
-import j2yb.dam.StorageItem.ContainerItem.Folder;
+import j2yb.dam.StorageItem.File;
 
 public class DriveTest {
     @Test
@@ -74,5 +73,16 @@ public class DriveTest {
         drive.deleteSelf();
         assertThat(drive.isDeleted()).isTrue();
         assertThat(rootFolder.isDeleted()).isTrue();
+    }
+
+    @Test
+    public void testViewContent_whenHasSubFolder_thenReturnDriveContent() {
+        Drive drive = new Drive("C:", null);
+        Folder rootFolder = new Folder("item", null);
+        Folder rootFolder2 = new Folder("item2", null);
+        drive.addItem(rootFolder);
+        drive.addItem(rootFolder2);
+        String expected = "Name: C:\n\t1. FOLDER - item\n\t2. FOLDER - item2\n";
+        assertThat(drive.viewContent()).isEqualTo(expected);
     }
 }

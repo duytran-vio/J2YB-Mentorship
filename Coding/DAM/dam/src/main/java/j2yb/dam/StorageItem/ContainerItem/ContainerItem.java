@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import j2yb.dam.StorageItem.StorageItem;
+import j2yb.dam.StorageItem.StorageItemType;
 import j2yb.dam.User.User;
 import lombok.Getter;
 
@@ -12,8 +13,8 @@ import lombok.Getter;
 public class ContainerItem extends StorageItem {
     private List<StorageItem> items;
 
-    public ContainerItem(String name, User owner) {
-        super(name, owner);
+    public ContainerItem(String name, User owner, StorageItemType type) {
+        super(name, owner, type);
         this.items = new ArrayList<>();
     }
     
@@ -54,5 +55,15 @@ public class ContainerItem extends StorageItem {
         items.forEach(StorageItem::deleteInternal);
         items.clear();
         super.deleteInternal();
+    }
+
+    @Override
+    public String viewContent() {
+        String str = "Name: " + this.getName() + '\n';
+        for (int i = 1; i < items.size() + 1; i++) {
+            var item = items.get(i - 1);
+            str += String.format("\t%d. %s - %s\n", i, item.getType(), item.getName());
+        }
+        return str;
     }
 }

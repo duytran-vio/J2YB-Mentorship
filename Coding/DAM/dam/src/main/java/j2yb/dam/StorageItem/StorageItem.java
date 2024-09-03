@@ -1,6 +1,8 @@
 package j2yb.dam.StorageItem;
 
 import j2yb.dam.StorageItem.ContainerItem.ContainerItem;
+import j2yb.dam.StorageItem.ContainerItem.Drive;
+import j2yb.dam.StorageItem.ContainerItem.Folder;
 import j2yb.dam.User.User;
 import lombok.Getter;
 
@@ -13,11 +15,26 @@ public abstract class StorageItem {
     private User owner;
     private ContainerItem parent;
     private boolean isDeleted = false;
+    private StorageItemType type;
 
-    public StorageItem(String name, User owner) {
+    public StorageItem(String name, User owner, StorageItemType type) {
         this.id = idCounter++;
         this.name = name;
         this.owner = owner;
+        this.type = type;
+    }
+
+    public static StorageItem createItemFactory(String name, User owner, StorageItemType type){
+        switch (type){
+            case FILE:
+                return new File(name, "", owner);
+            case FOLDER:
+                return new Folder(name, owner);
+            case DRIVE:
+                return new Drive(name, owner);
+            default:
+                throw new IllegalArgumentException("Invalid type");
+        }
     }
 
     public void rename(String newName) {
@@ -42,4 +59,6 @@ public abstract class StorageItem {
         this.parent = null;
         this.isDeleted = true;
     }
+
+    public abstract String viewContent();
 }

@@ -37,4 +37,11 @@ public class FileTest {
         assertThat(folder.getItems()).isEmpty();
         assertThat(file.isDeleted()).isTrue();
     }
+
+    @Test
+    public void testViewContent_thenReturnFileContent(){
+        File file = new File("file.txt", "content", null);
+        String expected = "Name: file.txt\nContent: content";
+        assertThat(file.viewContent()).isEqualTo(expected);
+    }
 }

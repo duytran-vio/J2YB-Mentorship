@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import j2yb.dam.Permission.*;
+import j2yb.dam.StorageItem.StorageItem;
+import j2yb.dam.StorageItem.StorageItemType;
+import j2yb.dam.StorageItem.ContainerItem.ContainerItem;
 import j2yb.dam.StorageItem.ContainerItem.Drive;
+import j2yb.dam.StorageItem.ContainerItem.Folder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +27,23 @@ public class User {
     }
 
     public Drive createDrive(String driveName) {
-        Drive newDrive = new Drive(driveName, this);
+        Drive newDrive = (Drive)StorageItem.createItemFactory(driveName, this, StorageItemType.DRIVE);
         drives.add(newDrive);
         Permission.addPermission(this, newDrive, Role.ADMIN);
         return newDrive;
+    }
+
+    public String viewItem(StorageItem item) {
+        return item.viewContent();
+    }
+
+    public StorageItem createItem(ContainerItem containerItem, StorageItemType itemType, String string) {
+        if (!Permission.canAlter(this, containerItem)){
+            throw new IllegalArgumentException("User does not have permission to add item");
+        }
+        StorageItem newItem = StorageItem.createItemFactory(string, this, itemType);
+        containerItem.addItem(newItem);
+        Permission.copyPermissions(this, containerItem, newItem);
+        return newItem;
     }
 }

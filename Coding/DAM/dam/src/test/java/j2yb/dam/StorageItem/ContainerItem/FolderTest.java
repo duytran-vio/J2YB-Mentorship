@@ -177,6 +177,28 @@ public class FolderTest {
         assertThat(folder.getItems()).doesNotContain(subFolder);
         assertThat(subFolder.getItems()).doesNotContain(subFile);
         assertThat(subFile.isDeleted()).isTrue();
+        assertThat(subFolder.isDeleted()).isTrue();
+    }
+
+    @Test
+    void testDeleteSelf_WhenIsSubFolderAndHasSubFile_ThenRemoveAllItem(){
+        // Arrange
+        Folder folder = new Folder("folder", null);
+        File file = new File("file", null, null);
+        Folder subFolder = new Folder("subFolder", null);
+        File subFile = new File("subFile", null, null);
+        folder.addItem(file);
+        folder.addItem(subFolder);
+        subFolder.addItem(subFile);
+
+        // Act
+        subFolder.deleteSelf();
+
+        // Assert
+        assertThat(folder.getItems()).doesNotContain(subFolder);
+        assertThat(subFolder.getItems()).doesNotContain(subFile);
+        assertThat(subFile.isDeleted()).isTrue();
+        assertThat(subFolder.isDeleted()).isTrue();
     }
 
     @Test

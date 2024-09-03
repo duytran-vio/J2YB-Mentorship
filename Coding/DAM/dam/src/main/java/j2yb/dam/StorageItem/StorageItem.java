@@ -32,11 +32,14 @@ public abstract class StorageItem {
     }
 
     public void deleteSelf(){
-        if (this.parent != null) {
+        if(this.parent != null){
             this.parent.removeItem(this);
         }
+        deleteInternal();
+    }
+
+    public void deleteInternal(){
         this.parent = null;
-        this.owner = null;
         this.isDeleted = true;
     }
 }

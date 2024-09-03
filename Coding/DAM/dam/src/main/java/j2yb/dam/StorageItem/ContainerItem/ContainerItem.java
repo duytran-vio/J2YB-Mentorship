@@ -45,14 +45,14 @@ public class ContainerItem extends StorageItem {
         if (foundItem == null) {
             throw new NoSuchElementException("Item not exists");
         }
+        foundItem.deleteInternal();
         removeItem(foundItem);
-        foundItem.deleteSelf();
     }
 
     @Override
-    public void deleteSelf() {
-        items.forEach(StorageItem::deleteSelf);
+    public void deleteInternal() {
+        items.forEach(StorageItem::deleteInternal);
         items.clear();
-        super.deleteSelf();
+        super.deleteInternal();
     }
 }

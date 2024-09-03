@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import j2yb.dam.StorageItem.ContainerItem.Folder;
+
 public class FileTest {
     @Test
     public void testNewFile() {
@@ -24,5 +26,15 @@ public class FileTest {
         File file = new File("file.txt", "content", null);
         file.changeContent("newContent");
         assertThat(file.getContent()).isEqualTo("newContent");
+    }
+
+    @Test
+    public void testDeleteSelf_whenIsSubFile_ThenSuccess() {
+        File file = new File("file.txt", "content", null);
+        Folder folder = new Folder("folder", null);
+        folder.addItem(file);
+        file.deleteSelf();
+        assertThat(folder.getItems()).isEmpty();
+        assertThat(file.isDeleted()).isTrue();
     }
 }

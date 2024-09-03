@@ -60,9 +60,19 @@ public class DriveTest {
     }
 
     @Test
-    public void rename() {
+    public void testRename() {
         Drive drive = new Drive("C:", null);
         drive.rename("D:");
         assertThat(drive.getName()).isEqualTo("D:");
+    }
+
+    @Test
+    public void testDeleteSelf_whenHasSubFolder_ThenAllItemsDeleted() {
+        Drive drive = new Drive("C:", null);
+        Folder rootFolder = new Folder("item", null);
+        drive.addItem(rootFolder);
+        drive.deleteSelf();
+        assertThat(drive.isDeleted()).isTrue();
+        assertThat(rootFolder.isDeleted()).isTrue();
     }
 }

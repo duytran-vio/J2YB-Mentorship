@@ -49,6 +49,9 @@ public abstract class StorageItem {
     }
 
     public void deleteSelf(){
+        if (isDeleted){
+            throw new IllegalArgumentException("Item is already deleted");
+        }
         if(this.parent != null){
             this.parent.removeItem(this);
         }

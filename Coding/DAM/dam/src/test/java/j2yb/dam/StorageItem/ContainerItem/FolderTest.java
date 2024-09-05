@@ -202,6 +202,18 @@ public class FolderTest {
     }
 
     @Test
+    void testDeleteSelf_whenFolderAlreadyDeleted_thenThrowIllegalArgumentException(){
+        // Arrange
+        Folder folder = new Folder("folder", null);
+        folder.deleteSelf();
+
+        // Act & Assert
+        assertThatThrownBy(() -> folder.deleteSelf())
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Item is already deleted");
+    }
+
+    @Test
     void testDeleteItem_WhenAlreadyDeletedItem_ThenThrowNoSuchElementException(){
         // Arrange
         Folder folder = new Folder("folder", null);

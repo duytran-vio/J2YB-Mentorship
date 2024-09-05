@@ -8,7 +8,6 @@ import j2yb.dam.StorageItem.StorageItem;
 import j2yb.dam.StorageItem.StorageItemType;
 import j2yb.dam.StorageItem.ContainerItem.ContainerItem;
 import j2yb.dam.StorageItem.ContainerItem.Drive;
-import j2yb.dam.StorageItem.ContainerItem.Folder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +33,9 @@ public class User {
     }
 
     public String viewItem(StorageItem item) {
+        if (!Permission.canView(this, item)){
+            throw new IllegalArgumentException("User does not have permission to view item");
+        }
         return item.viewContent();
     }
 
@@ -45,5 +47,15 @@ public class User {
         containerItem.addItem(newItem);
         Permission.copyPermissions(this, containerItem, newItem);
         return newItem;
+    }
+
+    public void deleteItem(StorageItem item) {
+        if (!Permission.canAlter(this, item)){
+            throw new IllegalArgumentException("User does not have permission to delete item");
+        }
+        item.deleteSelf();
+        if (item.getType() == StorageItemType.DRIVE){
+            drives.remove(item);
+        }
     }
 }

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import j2yb.dam.StorageItem.StorageItem;
-import j2yb.dam.StorageItem.ContainerItem.ContainerItem;
 import j2yb.dam.User.User;
 import lombok.Getter;
 
@@ -30,18 +29,18 @@ public final class Permission {
         permissions.clear();
     }
 
-    public static boolean canAlter(User user, ContainerItem containerItem) {
-        Role role = getRole(user, containerItem);
+    public static boolean canAlter(User user, StorageItem item) {
+        Role role = getRole(user, item);
         return role == Role.ADMIN || role == Role.CONTRIBUTOR;
     }
 
-    public static boolean canRead(User user, ContainerItem containerItem) {
-        Role role = getRole(user, containerItem);
+    public static boolean canView(User user, StorageItem item) {
+        Role role = getRole(user, item);
         return role == Role.ADMIN || role == Role.CONTRIBUTOR || role == Role.READER;
     }
 
-    public static boolean canShare(User user, ContainerItem containerItem) {
-        Role role = getRole(user, containerItem);
+    public static boolean canShare(User user, StorageItem item) {
+        Role role = getRole(user, item);
         return role == Role.ADMIN;
     }
 

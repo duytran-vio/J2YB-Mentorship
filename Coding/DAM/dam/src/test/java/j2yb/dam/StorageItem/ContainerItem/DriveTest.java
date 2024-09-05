@@ -76,6 +76,15 @@ public class DriveTest {
     }
 
     @Test
+    public void testDeleteSelf_whenDriveAlreadyDeleted_thenThrowIllegalArgumentException() {
+        Drive drive = new Drive("C:", null);
+        drive.deleteSelf();
+        assertThatThrownBy(() -> drive.deleteSelf())
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Item is already deleted");
+    }
+
+    @Test
     public void testViewContent_whenHasSubFolder_thenReturnDriveContent() {
         Drive drive = new Drive("C:", null);
         Folder rootFolder = new Folder("item", null);

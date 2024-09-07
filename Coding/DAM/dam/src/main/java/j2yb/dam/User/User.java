@@ -58,4 +58,11 @@ public class User {
             drives.remove(item);
         }
     }
+
+    public void sharePermission(StorageItem item, User user, Role role) {
+        if (!Permission.canShare(this, item)){
+            throw new IllegalArgumentException("User does not have permission to share item");
+        }
+        Permission.grantPermission(user, item, role);
+    }
 }

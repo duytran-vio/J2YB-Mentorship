@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import j2yb.dam.StorageItem.StorageItem;
+import j2yb.dam.StorageItem.ContainerItem.ContainerItem;
 import j2yb.dam.User.User;
 import lombok.Getter;
 
@@ -47,5 +48,13 @@ public final class Permission {
     public static void copyPermissions(User user, StorageItem source, StorageItem target) {
         Role role = getRole(user, source);
         addPermission(user, target, role);
+    }
+
+    public static void grantPermission(User user, StorageItem item, Role role) {
+        addPermission(user, item, role);
+        if (item instanceof ContainerItem) {
+            ContainerItem containerItem = (ContainerItem) item;
+            containerItem.getItems().forEach(i -> grantPermission(user, i, role));
+        }
     }
 }

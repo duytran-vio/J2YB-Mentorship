@@ -189,5 +189,23 @@ public class UserTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Item is already deleted");
     }
-        
+    
+    @Test
+    public void testSharePermission_whenUserHasPermission_thenSharePermissionSuccess() {
+        User user2 = new User("Jane Doe");
+        user.sharePermission(oneDriveRootFolder1SubFolder1, user2, Role.CONTRIBUTOR);
+        Role role = Permission.getRole(user2, oneDriveRootFolder1SubFolder1);
+        assertThat(role).isEqualTo(Role.CONTRIBUTOR);
+        assertThat(Permission.getRole(user2, oneDriveRootFolder1SubFolder1File1)).isEqualTo(Role.CONTRIBUTOR);
+        assertThat(Permission.getRole(user2, oneDriveRootFolder1)).isNull();
+    }
+
+    @Test
+    public void testSharePermission_whenUserDoesNotHavePermission_thenThrowException() {
+        Drive drive = user.createDrive("DriveA");
+        User user2 = new User("Jane Doe");
+        assertThatThrownBy(() -> user2.sharePermission(drive, user2, Role.READER))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("User does not have permission to share item");
+    }
 }

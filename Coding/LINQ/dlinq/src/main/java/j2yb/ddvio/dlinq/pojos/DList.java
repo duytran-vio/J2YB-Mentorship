@@ -2,6 +2,7 @@ package j2yb.ddvio.dlinq.pojos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import j2yb.ddvio.dlinq.interfaces.IDLinq;
@@ -34,6 +35,15 @@ public class DList implements IDLinq{
     }
 
     @Override
+    public List<Integer> select(Function<Integer, Integer> function){
+        var newList = new ArrayList<Integer>();
+        for (var item: list){
+            newList.add(function.apply(item));
+        }
+        return newList;
+    }
+
+    @Override
     public IDLinq where(Predicate<Integer> predicate) {
         var filterList = new ArrayList<Integer>();
         for (var item : list) {
@@ -44,5 +54,8 @@ public class DList implements IDLinq{
         return new DList(filterList);
     }
 
-    
+    @Override
+    public Integer count(){
+        return list.size();
+    }
 }

@@ -3,6 +3,7 @@ package j2yb.ddvio.dlinq.pojos;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -24,13 +25,29 @@ public class DListTest {
     @Test
     public void testSelectAllWithEmptyList() {
         // Arrange
-        DList dList = new DList(Arrays.asList());
+        DList dList = new DList(List.of());
 
         // Act
         List<Integer> result = dList.selectAll();
 
         // Assert
         assertEquals(result.size(), 0);
+    }
+
+    @Test
+    public void testSelect(){
+        // Arrange
+        DList dList = new DList();
+        var oldList = dList.selectAll();
+        Function<Integer, Integer> doubleValue = x -> x * 2;
+
+        // Act
+        var result = dList.select(doubleValue);
+
+        // Assert
+        assertEquals(result.size(), oldList.size());
+        assertEquals(result.get(0), oldList.get(0) * 2);
+        assertEquals(result.get(1), oldList.get(1) * 2);
     }
 
     @Test

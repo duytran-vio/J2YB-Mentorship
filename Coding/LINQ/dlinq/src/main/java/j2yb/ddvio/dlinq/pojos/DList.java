@@ -1,6 +1,7 @@
 package j2yb.ddvio.dlinq.pojos;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -35,8 +36,8 @@ public class DList implements IDLinq{
     }
 
     @Override
-    public List<Integer> select(Function<Integer, Integer> function){
-        var newList = new ArrayList<Integer>();
+    public <TResult> List<TResult> select(Function<Integer, TResult> function){
+        var newList = new ArrayList<TResult>();
         for (var item: list){
             newList.add(function.apply(item));
         }
@@ -57,5 +58,19 @@ public class DList implements IDLinq{
     @Override
     public Integer count(){
         return list.size();
+    }
+
+    @Override
+    public IDLinq orderBy(Function<Integer, Integer> keyExtractor){
+        var newList = new ArrayList<>(list);
+        newList.sort(Comparator.comparingInt(keyExtractor::apply));
+        return  new DList(newList);
+    }
+
+    @Override
+    public IDLinq orderByDescending(Function<Integer, Integer> keyExtractor){
+        var newList = new ArrayList<>(list);
+        newList.sort((first, second) -> keyExtractor.apply(second) - keyExtractor.apply(first));
+        return  new DList(newList);
     }
 }

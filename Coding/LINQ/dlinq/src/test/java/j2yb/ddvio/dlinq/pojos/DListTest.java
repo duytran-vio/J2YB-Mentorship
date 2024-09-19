@@ -51,6 +51,22 @@ public class DListTest {
     }
 
     @Test
+    public void testSelect_returnDoubleType(){
+        // Arrange
+        DList dList = new DList(List.of(1, 3, 5, 7));
+        var oldList = dList.selectAll();
+        Function<Integer, Double> halfValue = x -> x / 2.0;
+
+        // Act
+        var result = dList.select(halfValue);
+
+        // Assert
+        assertEquals(result.size(), oldList.size());
+        assertEquals(result.get(0), oldList.get(0) / 2.0);
+        assertEquals(result.get(1), oldList.get(1) / 2.0);
+    }
+
+    @Test
     public void testWhereWithEvenNumbers() {
         // Arrange
         DList dList = new DList();
@@ -116,5 +132,31 @@ public class DListTest {
 
         // Assert
         assertEquals(expected, result);
-    }    
+    }
+
+    @Test
+    public void testOrderBy() {
+        // Arrange
+        DList dList = new DList(List.of(7,3,4,5,7,6));
+        List<Integer> expected = Arrays.asList(3,4,5,6,7,7);
+
+        // Act
+        List<Integer> result = dList.orderBy(x -> x).selectAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testOrderByDescending() {
+        // Arrange
+        DList dList = new DList(List.of(7,3,4,5,7,6));
+        List<Integer> expected = Arrays.asList(7, 7, 6, 5, 4, 3);
+
+        // Act
+        List<Integer> result = dList.orderByDescending(x -> x).selectAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

@@ -2,13 +2,12 @@ package j2yb.ddvio.dlinq.pojos;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import j2yb.ddvio.dlinq.interfaces.IDLinq;
-
-public class DList implements IDLinq{
+public class DList{
     private List<Integer> list;
 
     public DList() {
@@ -30,12 +29,10 @@ public class DList implements IDLinq{
         this.list = list;
     }
 
-    @Override
     public List<Integer> selectAll() {
         return this.list;
     }
 
-    @Override
     public <TResult> List<TResult> select(Function<Integer, TResult> function){
         var newList = new ArrayList<TResult>();
         for (var item: list){
@@ -44,8 +41,7 @@ public class DList implements IDLinq{
         return newList;
     }
 
-    @Override
-    public IDLinq where(Predicate<Integer> predicate) {
+    public DList where(Predicate<Integer> predicate) {
         var filterList = new ArrayList<Integer>();
         for (var item : list) {
             if (predicate.test(item)) {
@@ -55,22 +51,119 @@ public class DList implements IDLinq{
         return new DList(filterList);
     }
 
-    @Override
-    public Integer count(){
-        return list.size();
+    public Integer count(Predicate<Integer> predicate) {
+        var count = 0;
+        for (var item : list) {
+            if (predicate.test(item)) {
+                count++;
+            }
+        }
+        return count;
     }
 
-    @Override
-    public IDLinq orderBy(Function<Integer, Integer> keyExtractor){
+    public Integer first(Predicate<Integer> predicate) {
+        for (var item : list) {
+            if (predicate.test(item)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public boolean any(Predicate<Integer> predicate) {
+        for (var item : list) {
+            if (predicate.test(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean all(Predicate<Integer> predicate) {
+        for (var item : list) {
+            if (!predicate.test(item)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public DList orderBy(Function<Integer, Integer> keyExtractor){
         var newList = new ArrayList<>(list);
         newList.sort(Comparator.comparingInt(keyExtractor::apply));
-        return  new DList(newList);
+        return new DList(newList);
     }
 
-    @Override
-    public IDLinq orderByDescending(Function<Integer, Integer> keyExtractor){
+    public DList orderByDescending(Function<Integer, Integer> keyExtractor){
         var newList = new ArrayList<>(list);
         newList.sort((first, second) -> keyExtractor.apply(second) - keyExtractor.apply(first));
-        return  new DList(newList);
+        return new DList(newList);
     }
+
+    public HashMap<Integer, List<Integer>> groupBy(Function<Integer, Integer> keyExtractor){
+        var map = new HashMap<Integer, List<Integer>>();
+        for (var item : list) {
+            var key = keyExtractor.apply(item);
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
+            }
+            map.get(key).add(item);
+        }
+        return map;
+    }
+
+    public HashMap<Integer, Integer> dmax(Function<Integer, Integer> keyExtractor){
+        var map = new HashMap<Integer, Integer>();
+        for(var item : list){
+            var key = keyExtractor.apply(item);
+            if (!map.containsKey(key)){
+                map.put(key, item);
+            }
+            else{
+                if (item > map.get(key)){
+                    map.put(key, item);
+                }
+            }
+        }
+        return map;
+    }
+
+    public HashMap<Integer, Integer> dmin(Function<Integer, Integer> keyExtractor){
+        var map = new HashMap<Integer, Integer>();
+        for(var item : list){
+            var key = keyExtractor.apply(item);
+            if (!map.containsKey(key)){
+                map.put(key, item);
+            }
+            else{
+                if (item < map.get(key)){
+                    map.put(key, item);
+                }
+            }
+        }
+        return map;
+    }
+
+    public HashMap<Integer, Integer> dcount(Function<Integer, Integer> keyExtractor){
+        var map = groupBy(keyExtractor);
+        var countMap = new HashMap<Integer, Integer>();
+        for (var key : map.keySet()){
+            countMap.put(key, map.get(key).size());
+        }
+        return countMap;
+    }
+
+    public HashMap<Integer, Integer> dsum(Function<Integer, Integer> keyExtractor){
+        var map = groupBy(keyExtractor);
+        var sumMap = new HashMap<Integer, Integer>();
+        for (var key : map.keySet()){
+            var sum = 0;
+            for (var item : map.get(key)){
+                sum += item;
+            }
+            sumMap.put(key, sum);
+        }
+        return sumMap;
+    }
+
 }

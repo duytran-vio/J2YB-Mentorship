@@ -2,6 +2,7 @@ package j2yb.ddvio.dlinq.pojos;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -155,6 +156,187 @@ public class DListTest {
 
         // Act
         List<Integer> result = dList.orderByDescending(x -> x).selectAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testCountWithEvenNumbers() {
+        // Arrange
+        DList dList = new DList();
+        Predicate<Integer> isEven = x -> x % 2 == 0;
+        int expectedCount = 5;
+
+        // Act
+        int result = dList.count(isEven);
+
+        // Assert
+        assertEquals(expectedCount, result);
+    }
+
+    @Test
+    public void testCountWithGreaterThanThree() {
+        // Arrange
+        DList dList = new DList();
+        Predicate<Integer> greaterThanThree = x -> x > 3;
+        int expectedCount = 7;
+
+        // Act
+        int result = dList.count(greaterThanThree);
+
+        // Assert
+        assertEquals(expectedCount, result);
+    }
+
+    @Test
+    public void testGroupByEvenOdd() {
+        // Arrange
+        DList dList = new DList();
+        Function<Integer, Integer> evenOddKeyExtractor = x -> x % 2;
+        HashMap<Integer, List<Integer>> expected = new HashMap<>();
+        expected.put(0, Arrays.asList(2, 4, 6, 8, 10));
+        expected.put(1, Arrays.asList(1, 3, 5, 7, 9));
+
+        // Act
+        HashMap<Integer, List<Integer>> result = dList.groupBy(evenOddKeyExtractor);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testGroupByMultipleKeys() {
+        // Arrange
+        DList dList = new DList(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Function<Integer, Integer> keyExtractor = x -> x % 3;
+        HashMap<Integer, List<Integer>> expected = new HashMap<>();
+        expected.put(0, Arrays.asList(3, 6, 9));
+        expected.put(1, Arrays.asList(1, 4, 7, 10));
+        expected.put(2, Arrays.asList(2, 5, 8));
+
+        // Act
+        HashMap<Integer, List<Integer>> result = dList.groupBy(keyExtractor);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testAnyWithEvenNumbers() {
+        // Arrange
+        DList dList = new DList();
+        Predicate<Integer> isEven = x -> x % 2 == 0;
+
+        // Act
+        boolean result = dList.any(isEven);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testAnyWithGreaterThanTen() {
+        // Arrange
+        DList dList = new DList();
+        Predicate<Integer> greaterThanTen = x -> x > 10;
+
+        // Act
+        boolean result = dList.any(greaterThanTen);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testAllWithEvenNumbers() {
+        // Arrange
+        DList dList = new DList(List.of(2, 4, 6, 8, 10));
+        Predicate<Integer> isEven = x -> x % 2 == 0;
+
+        // Act
+        boolean result = dList.all(isEven);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testAllWithMixedNumbers() {
+        // Arrange
+        DList dList = new DList(List.of(2, 3, 6, 8, 10));
+        Predicate<Integer> isEven = x -> x % 2 == 0;
+
+        // Act
+        boolean result = dList.all(isEven);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testDmaxWithMultipleKeys() {
+        // Arrange
+        DList dList = new DList(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Function<Integer, Integer> keyExtractor = x -> x % 3;
+        HashMap<Integer, Integer> expected = new HashMap<>();
+        expected.put(0, 9);
+        expected.put(1, 10);
+        expected.put(2, 8);
+
+        // Act
+        HashMap<Integer, Integer> result = dList.dmax(keyExtractor);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testDminWithMultipleKeys() {
+        // Arrange
+        DList dList = new DList(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Function<Integer, Integer> keyExtractor = x -> x % 3;
+        HashMap<Integer, Integer> expected = new HashMap<>();
+        expected.put(0, 3);
+        expected.put(1, 1);
+        expected.put(2, 2);
+
+        // Act
+        HashMap<Integer, Integer> result = dList.dmin(keyExtractor);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testDcountWithMultipleKeys() {
+        // Arrange
+        DList dList = new DList(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Function<Integer, Integer> keyExtractor = x -> x % 3;
+        HashMap<Integer, Integer> expected = new HashMap<>();
+        expected.put(0, 3);
+        expected.put(1, 4);
+        expected.put(2, 3);
+
+        // Act
+        HashMap<Integer, Integer> result = dList.dcount(keyExtractor);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testDsumWithMultipleKeys() {
+        // Arrange
+        DList dList = new DList(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        Function<Integer, Integer> keyExtractor = x -> x % 3;
+        HashMap<Integer, Integer> expected = new HashMap<>();
+        expected.put(0, 18); // 3+6+9
+        expected.put(1, 22); // 1+4+7+10
+        expected.put(2, 15); // 2+5+8
+
+        // Act
+        HashMap<Integer, Integer> result = dList.dsum(keyExtractor);
 
         // Assert
         assertEquals(expected, result);
